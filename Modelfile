@@ -1,4 +1,4 @@
-FROM E:\LLM\model\DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored\DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored-Q8_0-imat.gguf
+FROM yout_path_to.gguf
 TEMPLATE """{{ if .Messages }}
 {{- if or .System .Tools }}<|start_header_id|>system<|end_header_id|>
 {{- if .System }}
