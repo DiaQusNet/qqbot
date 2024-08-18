@@ -35,3 +35,19 @@ def messages_with_id(member_id, group_id, message, ai_message=False, message_rem
         store[group_id][member_id] = [{"role": "user","content": message}]
         store[group_id][member_id].insert(0, sys_message)
         return store[group_id][member_id]
+
+def reply(message):
+    url = 'http://localhost:11434/api/chat'
+    data = {
+        "model": "llama3.1:8b-instruct-q8_0",
+        "messages": message,
+        "option": {"temperature": 0.7},
+        "stream": False
+    }
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(url, data=json.dumps(data), headers=headers, stream=False)
+
+    if response.status_code == 200:
+        return response.json()['message']['content']
+    else:
+        return f"Request failed with status {response.status_code}"
