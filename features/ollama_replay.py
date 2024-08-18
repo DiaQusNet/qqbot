@@ -1,9 +1,6 @@
 import requests
 import json
 import os
-import base64
-import threading
-from features.web_search import exa_search
 
 def clean_memory():
     global store
