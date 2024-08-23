@@ -7,6 +7,7 @@ from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, Message
 
 from features.ollama_replay import messages_with_id, clean_memory, reply
+from features.web_search import web_search_reply
 
 test_config = read(os.path.join(os.path.dirname(__file__), "config.yaml"))
 
@@ -24,6 +25,16 @@ class MyClient(botpy.Client):
                 msg_type=0, 
                 msg_id=message.id,
                 content='记忆被清除了...')
+            _log.info(messageResult)
+            
+        elif '/联网搜索' in message.content:
+            query = message.content[7:]
+            ai_message = web_search_reply(query)
+            messageResult = await message._api.post_group_message(
+                group_openid=message.group_openid,
+                msg_type=0, 
+                msg_id=message.id,
+                content=ai_message)
             _log.info(messageResult)
 
         else:
